@@ -36,10 +36,48 @@ class MainActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.IO).launch {
                 //  searchAllClients()
                 searchById()
+
+            }
+        }
+
+        binding.btnUpdate.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                updateClient()
             }
 
         }
 
+        binding.btnDelete.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                deleteClient()
+            }
+
+        }
+
+    }
+
+    private suspend fun deleteClient() {
+        clientDao.delete(
+            Client(
+                id = 3,
+                name = "Renan Alterado",
+                lastName = "Corredato Alterado",
+                document = "12345679 Alterado",
+                city = "Suzano Alterado"
+            )
+        )
+    }
+
+    private suspend fun updateClient() {
+        clientDao.update(
+            Client(
+                id = 5,
+                name = "Renan Alterado",
+                lastName = "Corredato Alterado",
+                document = "12345679 Alterado",
+                city = "Suzano Alterado"
+            )
+        )
     }
 
     private suspend fun searchById() {
