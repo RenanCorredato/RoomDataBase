@@ -14,11 +14,11 @@ interface ClientDao {
     @Query("SELECT * FROM Client;") // buscar os dados
     suspend fun searchAll(): List<Client>
 
-    @Query("SELECT * FROM Client WHERE id = :id;")
+    @Query("SELECT * FROM Client WHERE id = :id;")  // buscar os dados id
     suspend fun searchById(id: Int):Client
 
     @Update
-    suspend fun update(client: Client)
+    suspend fun update(client: Client)// atualizando os dados
 
     @Delete
     suspend fun delete(client: Client)
