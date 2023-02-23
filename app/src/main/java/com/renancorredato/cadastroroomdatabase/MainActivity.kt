@@ -2,6 +2,7 @@ package com.renancorredato.cadastroroomdatabase
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.renancorredato.cadastroroomdatabase.database.AppDatabase
 import com.renancorredato.cadastroroomdatabase.database.dao.ClientDao
 import com.renancorredato.cadastroroomdatabase.database.model.Client
@@ -31,7 +32,39 @@ class MainActivity : AppCompatActivity() {
             insertClient()
 //            insertClientAll()
         }
+        binding.btnQuery.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                //  searchAllClients()
+                searchById()
+            }
 
+        }
+
+    }
+
+    private suspend fun searchById() {
+        val client = clientDao.searchById(11)
+        Log.i("Renan", client.toString())
+    }
+
+    private suspend fun searchAllClients() {
+        val clients = clientDao.searchAll()
+        for (client in clients) {
+            Log.i("Renan", client.toString())
+        }
+    }
+
+    private fun insertClient() {
+        CoroutineScope(Dispatchers.IO).launch {
+            clientDao.insert(
+                Client(
+                    name = "Renan",
+                    lastName = "Corredato",
+                    document = "12345679",
+                    city = "Suzano"
+                )
+            )
+        }
     }
 
     private fun insertClientAll() {
@@ -64,19 +97,6 @@ class MainActivity : AppCompatActivity() {
                     ),
                 )
 
-            )
-        }
-    }
-
-    private fun insertClient() {
-        CoroutineScope(Dispatchers.IO).launch {
-            clientDao.insert(
-                Client(
-                    name = "Renan",
-                    lastName = "Corredato",
-                    document = "12345679",
-                    city = "Suzano"
-                )
             )
         }
     }
