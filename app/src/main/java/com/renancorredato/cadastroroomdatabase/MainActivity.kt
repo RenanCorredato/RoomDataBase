@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
         binding.btnQuery.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 //  searchAllClients()
-                searchById()
-
+ //               searchById()
+                searchByIdS()
             }
         }
 
@@ -52,6 +52,20 @@ class MainActivity : AppCompatActivity() {
                 deleteClient()
             }
 
+        }
+
+        binding.btnFullNameTuple.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch{
+                searchFullNamesClient()
+            }
+        }
+
+    }
+
+    private suspend fun searchFullNamesClient() {
+        val clientsFullNames = clientDao.searchFullNames()
+        for (client in clientsFullNames){
+            Log.i("Renan", client.toString())
         }
 
     }
@@ -83,6 +97,13 @@ class MainActivity : AppCompatActivity() {
     private suspend fun searchById() {
         val client = clientDao.searchById(11)
         Log.i("Renan", client.toString())
+    }
+
+    private suspend fun searchByIdS() {
+        val clients = clientDao.searchByIdS(listOf(2,3,6,15))
+        for (client in clients) {
+            Log.i("Renan", client.toString())
+        }
     }
 
     private suspend fun searchAllClients() {
